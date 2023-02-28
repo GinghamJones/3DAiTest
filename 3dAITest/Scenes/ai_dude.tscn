@@ -1,0 +1,122 @@
+[gd_scene load_steps=16 format=3 uid="uid://o2v3udc8n5vq"]
+
+[ext_resource type="Script" path="res://Scripts/ai_dude.gd" id="1_rbgr0"]
+[ext_resource type="Texture2D" uid="uid://ci25a3wqry7ar" path="res://addons/kenney_particle_pack/smoke_04.png" id="2_0ogsx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6nh8a"]
+albedo_color = Color(0.913725, 0, 0.2, 1)
+roughness = 0.48
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_o20o2"]
+material = SubResource("StandardMaterial3D_6nh8a")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t4ku1"]
+albedo_color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_xhckj"]
+material = SubResource("StandardMaterial3D_t4ku1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_evmqb"]
+size = Vector3(37.183, 52.6575, 10.4526)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_slflh"]
+albedo_color = Color(0.365985, 0.000569194, 0.483124, 1)
+metallic = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.588235, 0.219608, 0, 1)
+emission_energy_multiplier = 6.97
+emission_operator = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_qcqye"]
+material = SubResource("StandardMaterial3D_slflh")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_sn3cv"]
+radius = 0.163844
+height = 0.836845
+
+[sub_resource type="Curve" id="Curve_x1h1c"]
+_data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.51282, 0.8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_blgfs"]
+curve = SubResource("Curve_x1h1c")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_8pq7e"]
+emission_shape = 1
+emission_sphere_radius = 0.19
+direction = Vector3(0, 1, 1)
+spread = 30.6
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.48
+initial_velocity_max = 1.28
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_blgfs")
+color = Color(0.45098, 0.45098, 0.45098, 1)
+hue_variation_min = 0.55
+hue_variation_max = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_di5lu"]
+transparency = 1
+cull_mode = 2
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_color = Color(0.847059, 0.482353, 0.537255, 1)
+albedo_texture = ExtResource("2_0ogsx")
+albedo_texture_msdf = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_r0tvd"]
+material = SubResource("StandardMaterial3D_di5lu")
+
+[node name="AIDude" type="CharacterBody3D" groups=["AI"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_rbgr0")
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.315358, 0, 0, 0, 0.315358, 0, 0, 0, 0.315358, 0, 0.352, 0)
+mesh = SubResource("CapsuleMesh_o20o2")
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.219612, 0, 0, 0, 0.219612, 0, 0, 0, 0.219612, 0, 0.740653, 0)
+mesh = SubResource("SphereMesh_xhckj")
+
+[node name="DetectionArea" type="Area3D" parent="Head"]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Head/DetectionArea"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 1.69656, -16.9023)
+shape = SubResource("BoxShape3D_evmqb")
+
+[node name="Eye" type="MeshInstance3D" parent="Head"]
+transform = Transform3D(0.413433, 0, 0, 0, 0.413433, 0, 0, 0, 0.413433, 0, 0, -0.413327)
+mesh = SubResource("SphereMesh_qcqye")
+skeleton = NodePath("../..")
+
+[node name="RayCast3D" type="RayCast3D" parent="Head/Eye"]
+transform = Transform3D(11.0138, 0, 0, 0, -4.8143e-07, -11.0138, 0, 11.0138, -4.8143e-07, 0, 0.0389233, 0.144826)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.434684, 0)
+shape = SubResource("CapsuleShape3D_sn3cv")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+target_desired_distance = 1.99
+path_max_distance = 1.81
+avoidance_enabled = true
+debug_enabled = true
+
+[node name="WalkSmoke" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.172416)
+emitting = false
+amount = 23
+lifetime = 0.47
+speed_scale = 0.5
+process_material = SubResource("ParticleProcessMaterial_8pq7e")
+draw_pass_1 = SubResource("QuadMesh_r0tvd")
+
+[connection signal="body_entered" from="Head/DetectionArea" to="." method="_on_detection_area_body_entered"]
+[connection signal="body_exited" from="Head/DetectionArea" to="." method="_on_detection_area_body_exited"]
+[connection signal="velocity_computed" from="NavigationAgent3D" to="." method="_on_navigation_agent_3d_velocity_computed"]

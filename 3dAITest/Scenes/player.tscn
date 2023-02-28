@@ -1,0 +1,185 @@
+[gd_scene load_steps=20 format=3 uid="uid://upj2aokmeoiv"]
+
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_nycko"]
+[ext_resource type="PackedScene" uid="uid://dymtfpq0hun3n" path="res://Assets/Sword_Golden.fbx" id="2_aitr4"]
+[ext_resource type="Texture2D" uid="uid://ci25a3wqry7ar" path="res://addons/kenney_particle_pack/smoke_04.png" id="2_cgc1t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kb5tn"]
+albedo_color = Color(0, 0.584314, 0.356863, 1)
+roughness = 0.48
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_wglar"]
+material = SubResource("StandardMaterial3D_kb5tn")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jk08j"]
+albedo_color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_iithi"]
+material = SubResource("StandardMaterial3D_jk08j")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_27roh"]
+albedo_color = Color(0.365985, 0.000569194, 0.483124, 1)
+metallic = 1.0
+roughness = 0.0
+emission_enabled = true
+emission = Color(0.411765, 0, 0.541176, 1)
+emission_energy_multiplier = 6.97
+emission_operator = 1
+
+[sub_resource type="SphereMesh" id="SphereMesh_walvb"]
+material = SubResource("StandardMaterial3D_27roh")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_fbntt"]
+radius = 0.165807
+height = 0.861474
+
+[sub_resource type="SeparationRayShape3D" id="SeparationRayShape3D_tgoiu"]
+
+[sub_resource type="Curve" id="Curve_hcio2"]
+_data = [Vector2(0, 0.2), 0.0, 0.0, 0, 0, Vector2(0.51282, 0.8), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_8k1f8"]
+curve = SubResource("Curve_hcio2")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_hmgdb"]
+emission_shape = 1
+emission_sphere_radius = 0.19
+direction = Vector3(0, 1, 1)
+spread = 30.6
+gravity = Vector3(0, 0, 0)
+initial_velocity_min = 0.48
+initial_velocity_max = 1.28
+scale_min = 0.0
+scale_curve = SubResource("CurveTexture_8k1f8")
+color = Color(0.45098, 0.45098, 0.45098, 1)
+hue_variation_min = 0.55
+hue_variation_max = 0.55
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_crv85"]
+transparency = 1
+cull_mode = 2
+shading_mode = 2
+diffuse_mode = 3
+specular_mode = 1
+albedo_texture = ExtResource("2_cgc1t")
+albedo_texture_msdf = true
+
+[sub_resource type="QuadMesh" id="QuadMesh_ag4g1"]
+material = SubResource("StandardMaterial3D_crv85")
+
+[sub_resource type="Animation" id="Animation_jbpys"]
+resource_name = "Swing"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/WeaponHolder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(-0.985846, 1.74231, -1.06718), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/WeaponHolder:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.480695, 0, -1.02894), Vector3(0.0187044, -0.307459, -1.02894), Vector3(0.481, 0, -1.029)]
+}
+
+[sub_resource type="Animation" id="Animation_61v6q"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Body/WeaponHolder:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Body/WeaponHolder:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.480695, 0, -1.02894)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fnpu3"]
+_data = {
+"RESET": SubResource("Animation_61v6q"),
+"Swing": SubResource("Animation_jbpys")
+}
+
+[node name="Player" type="CharacterBody3D" groups=["Player"]]
+collision_layer = 2
+collision_mask = 7
+script = ExtResource("1_nycko")
+speed = 7.0
+acceleration = 0.2
+
+[node name="Body" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.315358, 0, 0, 0, 0.315358, 0, 0, 0, 0.315358, 0, 0.352, 0)
+mesh = SubResource("CapsuleMesh_wglar")
+
+[node name="WeaponHolder" type="Node3D" parent="Body"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.480695, 0, -1.02894)
+
+[node name="Sword_Golden" parent="Body/WeaponHolder" instance=ExtResource("2_aitr4")]
+transform = Transform3D(0.258819, 0, -0.965926, 0, 1, 0, 0.965926, 0, 0.258819, 0, 0, 0)
+
+[node name="Head" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.219612, 0, 0, 0, 0.219612, 0, 0, 0, 0.219612, 0, 0.740653, 0)
+mesh = SubResource("SphereMesh_iithi")
+
+[node name="Eye" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.0907949, 0, 0, 0, 0.0907949, 0, 0, 0, 0.0907949, 0, 0.740653, -0.0907715)
+mesh = SubResource("SphereMesh_walvb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.438395, 0)
+shape = SubResource("CapsuleShape3D_fbntt")
+
+[node name="CamRotationHelper" type="Node3D" parent="."]
+
+[node name="SpringArm3D" type="SpringArm3D" parent="CamRotationHelper"]
+transform = Transform3D(1, 0, 0, 0, 0.991176, 0.13255, 0, -0.13255, 0.991176, 0.0415648, 0.754736, -0.0006845)
+shape = SubResource("SeparationRayShape3D_tgoiu")
+spring_length = 1.73
+margin = 0.182
+
+[node name="Camera3D" type="Camera3D" parent="CamRotationHelper/SpringArm3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.126844, 1.80327)
+
+[node name="WalkSmoke" type="GPUParticles3D" parent="."]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.172416)
+emitting = false
+amount = 23
+lifetime = 0.47
+speed_scale = 0.5
+process_material = SubResource("ParticleProcessMaterial_hmgdb")
+draw_pass_1 = SubResource("QuadMesh_ag4g1")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_fnpu3")
+}

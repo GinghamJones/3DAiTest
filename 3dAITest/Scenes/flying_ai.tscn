@@ -1,0 +1,184 @@
+[gd_scene load_steps=15 format=3 uid="uid://crqjl0vgadbp"]
+
+[ext_resource type="Script" path="res://Scripts/FlyingAI.gd" id="1_5qvci"]
+[ext_resource type="Texture2D" uid="uid://c7n70ic5fi3dt" path="res://addons/kenney_particle_pack/spark_06.png" id="2_ny36g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gbisc"]
+albedo_color = Color(0.215686, 0.215686, 0.215686, 1)
+metallic = 0.46
+metallic_specular = 0.42
+roughness = 0.37
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ebahy"]
+material = SubResource("StandardMaterial3D_gbisc")
+radius = 0.097
+height = 0.652
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pm28x"]
+albedo_color = Color(0.623529, 0.0352941, 1, 1)
+emission_enabled = true
+emission = Color(0.623074, 0.0348141, 1, 1)
+emission_energy_multiplier = 2.41
+
+[sub_resource type="TorusMesh" id="TorusMesh_sgvik"]
+material = SubResource("StandardMaterial3D_pm28x")
+inner_radius = 0.17
+outer_radius = 0.211
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_7sesu"]
+radius = 0.113753
+height = 0.654177
+
+[sub_resource type="Curve" id="Curve_jkocl"]
+_data = [Vector2(0.0107527, 0.318182), 0.0, 0.0, 0, 0, Vector2(0.790323, 0), 0.0, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vky50"]
+albedo_color = Color(0.572549, 0, 0.145098, 1)
+metallic = 0.26
+roughness = 0.0
+
+[sub_resource type="TubeTrailMesh" id="TubeTrailMesh_twfft"]
+material = SubResource("StandardMaterial3D_vky50")
+radius = 0.276
+sections = 2
+section_length = 0.189
+curve = SubResource("Curve_jkocl")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rnt80"]
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 1)
+emission_ring_height = 0.0
+emission_ring_radius = 0.17
+emission_ring_inner_radius = 0.211
+direction = Vector3(0, 1, 0)
+spread = 0.0
+gravity = Vector3(0, 0, 0)
+
+[sub_resource type="Shader" id="Shader_c2lpu"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.0.rc4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_disabled,diffuse_toon,specular_toon,vertex_lighting,alpha_to_coverage;
+uniform vec4 albedo;// : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float alpha_scissor_threshold;
+uniform float alpha_antialiasing_edge;
+uniform ivec2 albedo_texture_size;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform int particles_anim_h_frames;
+uniform int particles_anim_v_frames;
+uniform bool particles_anim_loop;
+uniform sampler2D texture_emission : source_color, hint_default_black,filter_linear_mipmap,repeat_enable;
+uniform vec4 emission : source_color;
+uniform float emission_energy;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	ROUGHNESS=roughness;
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	mat4 mat_world = mat4(normalize(INV_VIEW_MATRIX[0]), normalize(INV_VIEW_MATRIX[1]) ,normalize(INV_VIEW_MATRIX[2]), MODEL_MATRIX[3]);
+	mat_world = mat_world * mat4(vec4(cos(INSTANCE_CUSTOM.x), -sin(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(sin(INSTANCE_CUSTOM.x), cos(INSTANCE_CUSTOM.x), 0.0, 0.0), vec4(0.0, 0.0, 1.0, 0.0), vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_MATRIX = VIEW_MATRIX * mat_world;
+	MODELVIEW_MATRIX = MODELVIEW_MATRIX * mat4(vec4(length(MODEL_MATRIX[0].xyz), 0.0, 0.0, 0.0),vec4(0.0, length(MODEL_MATRIX[1].xyz), 0.0, 0.0), vec4(0.0, 0.0, length(MODEL_MATRIX[2].xyz), 0.0), vec4(0.0, 0.0, 0.0, 1.0));
+	MODELVIEW_NORMAL_MATRIX = mat3(MODELVIEW_MATRIX);
+	float h_frames = float(particles_anim_h_frames);
+	float v_frames = float(particles_anim_v_frames);
+	float particle_total_frames = float(particles_anim_h_frames * particles_anim_v_frames);
+	float particle_frame = floor(INSTANCE_CUSTOM.z * float(particle_total_frames));
+	if (!particles_anim_loop) {
+		particle_frame = clamp(particle_frame, 0.0, particle_total_frames - 1.0);
+	} else {
+		particle_frame = mod(particle_frame, particle_total_frames);
+	}
+	UV /= vec2(h_frames, v_frames);
+	UV += vec2(mod(particle_frame, h_frames) / h_frames, floor((particle_frame + 0.5) / h_frames) / v_frames);
+}
+
+
+
+
+
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	albedo_tex *= COLOR;
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	vec3 emission_tex = texture(texture_emission,base_uv).rgb;
+	EMISSION = (emission.rgb+emission_tex)*emission_energy;
+	ALPHA *= albedo.a * albedo_tex.a;
+	ALPHA_SCISSOR_THRESHOLD = alpha_scissor_threshold;
+	ALPHA_ANTIALIASING_EDGE = alpha_antialiasing_edge;
+	ALPHA_TEXTURE_COORDINATE = UV * vec2(albedo_texture_size);
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wt46q"]
+render_priority = 0
+shader = SubResource("Shader_c2lpu")
+shader_parameter/albedo = Color(0.556863, 0.427451, 0, 1)
+shader_parameter/alpha_scissor_threshold = 0.284
+shader_parameter/alpha_antialiasing_edge = 0.49
+shader_parameter/albedo_texture_size = Vector2i(512, 512)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/particles_anim_h_frames = 1
+shader_parameter/particles_anim_v_frames = 1
+shader_parameter/particles_anim_loop = false
+shader_parameter/emission = Color(0.556863, 0.427451, 0, 1)
+shader_parameter/emission_energy = 6.25
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_albedo = ExtResource("2_ny36g")
+
+[sub_resource type="QuadMesh" id="QuadMesh_ogepx"]
+material = SubResource("ShaderMaterial_wt46q")
+size = Vector2(0.409, 1.093)
+
+[node name="FlyingAI" type="CharacterBody3D" groups=["AI"]]
+collision_layer = 4
+collision_mask = 7
+script = ExtResource("1_5qvci")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, -4.37114e-08, 0, 0, 0)
+mesh = SubResource("CapsuleMesh_ebahy")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+mesh = SubResource("TorusMesh_sgvik")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CapsuleShape3D_7sesu")
+
+[node name="MeshInstance3D3" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, -1, -1, -4.37114e-08, 0, -4.37114e-08, 1, -4.37114e-08, 0.00718284, 0, -0.322994)
+mesh = SubResource("TubeTrailMesh_twfft")
+
+[node name="Sparks" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.564806, 0)
+amount = 2
+process_material = SubResource("ParticleProcessMaterial_rnt80")
+draw_pass_1 = SubResource("QuadMesh_ogepx")

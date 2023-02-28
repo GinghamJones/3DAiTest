@@ -1,0 +1,7 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://507kjm7i0gq1"]
+
+[ext_resource type="FontFile" uid="uid://bbxg4ho7j0vt0" path="res://Fonts/Go around the books 2022.ttf" id="1_oying"]
+
+[resource]
+font = ExtResource("1_oying")
+font_size = 72

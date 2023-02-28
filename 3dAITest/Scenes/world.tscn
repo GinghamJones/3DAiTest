@@ -1,0 +1,632 @@
+[gd_scene load_steps=27 format=3 uid="uid://buvyxyitwvvpp"]
+
+[ext_resource type="PackedScene" uid="uid://upj2aokmeoiv" path="res://Scenes/player.tscn" id="1_btg7p"]
+[ext_resource type="Script" path="res://Scripts/world.gd" id="1_o6c4i"]
+[ext_resource type="PackedScene" uid="uid://o2v3udc8n5vq" path="res://Scenes/ai_dude.tscn" id="2_oyle2"]
+[ext_resource type="Material" uid="uid://b1mgc3od4cy88" path="res://m_streetlamp.tres" id="4_2boxv"]
+[ext_resource type="PackedScene" uid="uid://crqjl0vgadbp" path="res://Scenes/flying_ai.tscn" id="4_vwak4"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_6krvr"]
+vertices = PackedVector3Array(-9.5, 1, -1, -9.25, 1, -1, -9, 1, -2, -9.5, 1, -9.5, -4.25, 1, -7.75, -3.25, 1, -8, -3.25, 1, -9.5, -9.5, 1, -9.5, -3.5, 1, -4, -3.25, 1, -5.75, -4.25, 1, -6, -5, 1, -3.75, -5, 1, -3.75, -4.25, 1, -6, -4.25, 1, -7.75, -9.5, 1, -9.5, -9, 1, -2, -7.5, 1, -2, -7.5, 1, -2, -5, 1, -2.5, -5, 1, -3.75, 4.5, 1, -8.75, 5.75, 1, -9, 5.75, 1, -9.5, -3.25, 1, -9.5, -2, 1, -6, -0.25, 1, -5.75, 0, 1, -6.25, -2, 1, -7.75, -3.25, 1, -9.5, -3.25, 1, -8, -2, 1, -7.75, 1.75, 1, -6.25, 4.5, 1, -7, 4.5, 1, -8.75, -3.25, 1, -9.5, -2, 1, -7.75, 0, 1, -6.25, 2, 1, -5.75, 5, 1, -6.75, 4.5, 1, -7, 1.75, 1, -6.25, 5.75, 1, -9.5, 5.75, 1, -9, 6.75, 1, -8.75, 9.5, 1, -9.5, 5, 1, -6.75, 2, 1, -5.75, 2, 1, -4.25, 5.25, 1, -2.5, 6.75, 1, -2.5, 6.75, 1, -7, 6.75, 1, -2.5, 7, 1, -1.5, 9.5, 1, -1.5, 9.5, 1, -9.5, 6.75, 1, -7, 9.5, 1, -9.5, 6.75, 1, -8.75, 6.75, 1, -7, -3.25, 1, -5.75, -3.5, 1, -4, -2.75, 1, -3.75, -2, 1, -6, 1.5, 1, -4, -0.25, 1, -4.25, -2.75, 1, -2, -3.5, 1, 0.75, -0.75, 1, 3.5, 1.75, 1, 0.25, -0.25, 1, -4.25, -0.25, 1, -5.75, -2, 1, -6, -2.75, 1, -3.75, -2.75, 1, -2, -0.75, 1, 3.5, 1.75, 1, 1.75, 1.75, 1, 0.25, -2.75, 1, -2, -3.25, 1, -1.75, -3.5, 1, 0.75, -3.5, 1, 2.25, -2, 1, 3.5, -0.75, 1, 3.5, -3.5, 1, 0.75, 1.75, 1, 0.25, 2.75, 1, 0, 1.5, 1, -4, 5, 1, 5, 4.75, 1, 6, 5.25, 1, 6.25, 6.75, 1, 4.75, 5.25, 1, 8, 4.25, 1, 8.25, 4.25, 1, 9.5, 9.5, 1, 9.5, 6.75, 1, 4.75, 9.5, 1, 9.5, 9.5, 1, -1.5, 6.75, 1, 3, 4, 1, 0.25, 4, 1, 2, 4.75, 1, 2.75, 6.75, 1, 3, 6.75, 1, -0.25, 5, 1, -0.25, 9.5, 1, -1.5, 7, 1, -1.5, 6.75, 1, -0.25, 6.75, 1, 3, 4.75, 1, -2.25, 5.25, 1, -2.5, 2, 1, -4.25, 6.75, 1, 4.75, 5.25, 1, 6.25, 5.25, 1, 8, 9.5, 1, 9.5, 5, 1, -0.25, 4.75, 1, -2.25, 2, 1, -4.25, 1.5, 1, -4, 2.75, 1, 0, 4, 1, 0.25, -9, 1, 0.25, -9.25, 1, -1, -9.5, 1, -1, -9.5, 1, 6, -2.5, 1, 3.75, -2, 1, 3.5, -3.5, 1, 2.25, -3.75, 1, 2.75, -5, 1, 5, -4.75, 1, 6, -2.25, 1, 5.75, -2.5, 1, 3.75, -3.75, 1, 2.75, -5, 1, -2.5, -7.5, 1, -2, -7, 1, -1.75, -4.75, 1, -1.75, -5, 1, -2.5, -7, 1, -1.75, -7.25, 1, 0.25, -5.5, 1, 0.5, -3.5, 1, 0.75, -3.25, 1, -1.75, -4.75, 1, -1.75, -5.5, 1, 0.5, -7.25, 1, 0.25, -9, 1, 0.25, -9.5, 1, 6, -6.75, 1, 5, -5.75, 1, 2.5, -5.5, 1, 0.5, -9.5, 1, 6, -7, 1, 6, -6.75, 1, 5, -5, 1, 5, -3.75, 1, 2.75, -5.75, 1, 2.5, -6.75, 1, 5, 4.75, 1, 6, 5, 1, 5, 4.5, 1, 4.75, 3, 1, 6.25, -0.25, 1, 5.5, -1, 1, 5.75, -0.75, 1, 6.75, 0.75, 1, 7, 0.75, 1, 8.75, -0.5, 1, 9, -0.5, 1, 9.5, 4.5, 1, 4.75, 4, 1, 2, 2, 1, 2.25, -0.25, 1, 3.75, 0.75, 1, 7, 3, 1, 6.25, 4.25, 1, 9.5, 4.25, 1, 8.25, 3, 1, 8, 0.75, 1, 8.75, -0.5, 1, 9.5, -0.25, 1, 3.75, -0.25, 1, 5.5, 0.75, 1, 7, 4.5, 1, 4.75, 4.75, 1, 2.75, 4, 1, 2, 1.75, 1, 1.75, -0.75, 1, 3.5, -0.25, 1, 3.75, 2, 1, 2.25, 0.75, 1, 7, 0.75, 1, 8.75, 3, 1, 8, 3, 1, 6.25, -0.5, 1, 9.5, -0.5, 1, 9, -1.5, 1, 8.75, -1.5, 1, 7, -0.75, 1, 6.75, -1, 1, 5.75, -2.25, 1, 5.75, -5, 1, 7.25, -6.75, 1, 7.25, -9.5, 1, 9.5, -0.5, 1, 9.5, -1.5, 1, 8.75, -6.75, 1, 7.25, -7, 1, 6, -9.5, 1, 6, -9.5, 1, 9.5, -1.5, 1, 8.75, -1.5, 1, 7, -2.25, 1, 5.75, -4.75, 1, 6, -5, 1, 7.25)
+polygons = [PackedInt32Array(1, 0, 2), PackedInt32Array(2, 0, 3), PackedInt32Array(5, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(9, 8, 10), PackedInt32Array(10, 8, 11), PackedInt32Array(13, 12, 14), PackedInt32Array(14, 12, 17), PackedInt32Array(14, 17, 16), PackedInt32Array(14, 16, 15), PackedInt32Array(20, 19, 18), PackedInt32Array(22, 21, 23), PackedInt32Array(23, 21, 24), PackedInt32Array(26, 25, 27), PackedInt32Array(27, 25, 28), PackedInt32Array(31, 30, 29), PackedInt32Array(37, 36, 32), PackedInt32Array(32, 36, 35), PackedInt32Array(32, 35, 33), PackedInt32Array(33, 35, 34), PackedInt32Array(41, 40, 38), PackedInt32Array(38, 40, 39), PackedInt32Array(43, 42, 44), PackedInt32Array(44, 42, 45), PackedInt32Array(47, 46, 48), PackedInt32Array(48, 46, 51), PackedInt32Array(48, 51, 49), PackedInt32Array(49, 51, 50), PackedInt32Array(53, 52, 54), PackedInt32Array(54, 52, 56), PackedInt32Array(54, 56, 55), PackedInt32Array(59, 58, 57), PackedInt32Array(61, 60, 62), PackedInt32Array(62, 60, 63), PackedInt32Array(65, 64, 66), PackedInt32Array(66, 64, 69), PackedInt32Array(66, 69, 67), PackedInt32Array(67, 69, 68), PackedInt32Array(71, 70, 72), PackedInt32Array(72, 70, 73), PackedInt32Array(73, 70, 74), PackedInt32Array(76, 75, 77), PackedInt32Array(80, 79, 78), PackedInt32Array(82, 81, 83), PackedInt32Array(83, 81, 84), PackedInt32Array(87, 86, 85), PackedInt32Array(89, 88, 90), PackedInt32Array(90, 88, 91), PackedInt32Array(93, 92, 94), PackedInt32Array(94, 92, 95), PackedInt32Array(99, 98, 96), PackedInt32Array(96, 98, 97), PackedInt32Array(100, 105, 101), PackedInt32Array(101, 105, 102), PackedInt32Array(102, 105, 104), PackedInt32Array(102, 104, 103), PackedInt32Array(107, 106, 108), PackedInt32Array(108, 106, 109), PackedInt32Array(110, 112, 111), PackedInt32Array(114, 113, 115), PackedInt32Array(115, 113, 116), PackedInt32Array(122, 121, 117), PackedInt32Array(117, 121, 118), PackedInt32Array(118, 121, 119), PackedInt32Array(119, 121, 120), PackedInt32Array(124, 123, 125), PackedInt32Array(125, 123, 126), PackedInt32Array(130, 129, 127), PackedInt32Array(127, 129, 128), PackedInt32Array(132, 131, 133), PackedInt32Array(133, 131, 134), PackedInt32Array(134, 131, 135), PackedInt32Array(138, 137, 136), PackedInt32Array(140, 139, 141), PackedInt32Array(141, 139, 143), PackedInt32Array(141, 143, 142), PackedInt32Array(145, 144, 146), PackedInt32Array(146, 144, 147), PackedInt32Array(153, 152, 148), PackedInt32Array(148, 152, 149), PackedInt32Array(149, 152, 151), PackedInt32Array(149, 151, 150), PackedInt32Array(156, 155, 154), PackedInt32Array(160, 159, 157), PackedInt32Array(157, 159, 158), PackedInt32Array(162, 161, 163), PackedInt32Array(163, 161, 164), PackedInt32Array(166, 165, 167), PackedInt32Array(167, 165, 168), PackedInt32Array(171, 170, 169), PackedInt32Array(173, 172, 174), PackedInt32Array(174, 172, 177), PackedInt32Array(174, 177, 175), PackedInt32Array(175, 177, 176), PackedInt32Array(179, 178, 180), PackedInt32Array(180, 178, 181), PackedInt32Array(181, 178, 182), PackedInt32Array(185, 184, 183), PackedInt32Array(188, 187, 186), PackedInt32Array(192, 191, 189), PackedInt32Array(189, 191, 190), PackedInt32Array(196, 195, 193), PackedInt32Array(193, 195, 194), PackedInt32Array(199, 198, 197), PackedInt32Array(201, 200, 202), PackedInt32Array(202, 200, 203), PackedInt32Array(208, 207, 204), PackedInt32Array(204, 207, 205), PackedInt32Array(205, 207, 206), PackedInt32Array(210, 209, 211), PackedInt32Array(211, 209, 212), PackedInt32Array(214, 213, 215), PackedInt32Array(215, 213, 216), PackedInt32Array(216, 213, 217)]
+
+[sub_resource type="Shader" id="Shader_kkqfm"]
+code = "// NOTE: Shader automatically converted from Godot Engine 4.0.rc4's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,cull_back,diffuse_toon,specular_toon;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform sampler2D texture_normal : hint_roughness_normal,filter_linear_mipmap,repeat_enable;
+uniform float normal_scale : hint_range(-16,16);
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	NORMAL_MAP = texture(texture_normal,base_uv).rgb;
+	NORMAL_MAP_DEPTH = normal_scale;
+}
+"
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_daqvu"]
+fractal_type = 2
+fractal_octaves = 3
+fractal_lacunarity = 1.023
+fractal_gain = 0.278
+fractal_weighted_strength = 0.08
+domain_warp_type = 1
+domain_warp_amplitude = 30.239
+domain_warp_frequency = 0.008
+domain_warp_fractal_type = 2
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bkkln"]
+width = 1000
+height = 1000
+in_3d_space = true
+as_normal_map = true
+bump_strength = 85.8
+normalize = false
+noise = SubResource("FastNoiseLite_daqvu")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mewl7"]
+render_priority = 0
+shader = SubResource("Shader_kkqfm")
+shader_parameter/albedo = Color(0.235294, 0.403922, 0, 1)
+shader_parameter/point_size = 1.0
+shader_parameter/roughness = 1.0
+shader_parameter/metallic_texture_channel = Plane(1, 0, 0, 0)
+shader_parameter/specular = 0.5
+shader_parameter/metallic = 0.0
+shader_parameter/normal_scale = 4.16
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(1, 1, 1)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
+shader_parameter/texture_normal = SubResource("NoiseTexture2D_bkkln")
+
+[sub_resource type="BoxMesh" id="BoxMesh_u2rj8"]
+material = SubResource("ShaderMaterial_mewl7")
+size = Vector3(20, 1, 20)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ei0rw"]
+albedo_color = Color(0.337255, 0, 0.623529, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_5vkwv"]
+material = ExtResource("4_2boxv")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 3.25
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_6ju0j"]
+material = ExtResource("4_2boxv")
+top_radius = 0.05
+bottom_radius = 0.05
+height = 1.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_knun1"]
+emission_enabled = true
+emission = Color(0.639216, 0.639216, 0.639216, 1)
+emission_energy_multiplier = 8.82
+
+[sub_resource type="SphereMesh" id="SphereMesh_2nqik"]
+material = SubResource("StandardMaterial3D_knun1")
+radius = 0.05
+height = 0.1
+
+[sub_resource type="FogMaterial" id="FogMaterial_1t3cj"]
+density = 1.4354
+emission = Color(0.317647, 0.317647, 0.317647, 1)
+height_falloff = 0.152868
+edge_fade = 0.221914
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_b77iu"]
+emission_shape = 3
+emission_box_extents = Vector3(10, 0.1, 10)
+gravity = Vector3(0, -0.328, 0)
+turbulence_enabled = true
+turbulence_noise_strength = 2.4
+turbulence_noise_scale = 1.48
+turbulence_noise_speed = Vector3(0.165, 0, 0.092)
+turbulence_influence_min = 0.0
+turbulence_influence_max = 0.05
+collision_mode = 1
+collision_friction = 0.0
+collision_bounce = 0.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m71mq"]
+emission_enabled = true
+emission = Color(1, 1, 1, 1)
+emission_energy_multiplier = 5.22
+
+[sub_resource type="SphereMesh" id="SphereMesh_ej5p8"]
+material = SubResource("StandardMaterial3D_m71mq")
+radius = 0.005
+height = 0.01
+radial_segments = 9
+rings = 4
+
+[sub_resource type="Gradient" id="Gradient_s1ynq"]
+colors = PackedColorArray(0.111443, 0.386039, 0.580555, 1, 0.81656, 0.561976, 0.426763, 1)
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ibsvv"]
+noise_type = 3
+fractal_type = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_xnjt8"]
+width = 65
+height = 950
+seamless = true
+color_ramp = SubResource("Gradient_s1ynq")
+noise = SubResource("FastNoiseLite_ibsvv")
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_7fust"]
+panorama = SubResource("NoiseTexture2D_xnjt8")
+
+[sub_resource type="Sky" id="Sky_ndsf3"]
+sky_material = SubResource("PanoramaSkyMaterial_7fust")
+
+[sub_resource type="Environment" id="Environment_454cb"]
+background_mode = 2
+background_color = Color(0.411765, 0.552941, 0.65098, 1)
+background_energy_multiplier = 0.4
+sky = SubResource("Sky_ndsf3")
+ambient_light_source = 3
+tonemap_mode = 3
+tonemap_exposure = 0.98
+tonemap_white = 6.2
+ssao_enabled = true
+ssao_detail = 1.88
+ssao_light_affect = 0.65
+ssao_ao_channel_affect = 1.0
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_levels/1 = 16.0
+glow_levels/2 = 12.03
+glow_levels/3 = 8.94
+glow_levels/4 = 6.45
+glow_levels/5 = 3.6
+glow_levels/6 = 1.74
+glow_levels/7 = 0.87
+glow_strength = 0.71
+glow_mix = 0.413
+glow_bloom = 0.03
+glow_blend_mode = 4
+volumetric_fog_enabled = true
+volumetric_fog_density = 0.0159
+adjustment_enabled = true
+adjustment_saturation = 1.83
+
+[node name="World" type="Node3D"]
+script = ExtResource("1_o6c4i")
+
+[node name="Player" parent="." instance=ExtResource("1_btg7p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.134938, 0.5, 1.6084)
+
+[node name="AIDude" parent="." instance=ExtResource("2_oyle2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.13783, 0.5, -4.19538)
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+visible = false
+navigation_mesh = SubResource("NavigationMesh_6krvr")
+
+[node name="AIDude2" parent="." instance=ExtResource("2_oyle2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.78287, 0.5, 3.96189)
+
+[node name="AIDude3" parent="." instance=ExtResource("2_oyle2")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.04531, 0.5, 2.91972)
+
+[node name="FlyingAI" parent="." instance=ExtResource("4_vwak4")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.82945, 2.85683, -1.78674)
+
+[node name="Terrain" type="Node3D" parent="."]
+
+[node name="Floor" type="CSGMesh3D" parent="Terrain"]
+use_collision = true
+mesh = SubResource("BoxMesh_u2rj8")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.84533, 1, -1.40059)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.72196, 1, 1.59585)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.31368, 1, 4.52581)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.06655, 1, -6.84238)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.765239, 1, -5.01131)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.02628, 1, -0.932942)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89262, 1, 6.18715)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.64063, 1, 3.80038)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.64063, 1, -7.93065)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D11" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.963, 1, -2.96762)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D12" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.9015, 1, 1.22516)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D13" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.20793, 1, 7.21458)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="CSGBox3D14" type="CSGBox3D" parent="Terrain" groups=["Box"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.362054, 1, 7.99292)
+use_collision = true
+collision_mask = 0
+material = SubResource("StandardMaterial3D_ei0rw")
+
+[node name="StreetLamps" type="Node3D" parent="Terrain"]
+
+[node name="StreetLamp" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.60015, 2.125, 0)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.4314, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 51.21
+
+[node name="StreetLamp2" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.56604, 2.125, -5.87756)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp2"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp2"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp2"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp2"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.43585, 1.48389, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 48.73
+
+[node name="StreetLamp3" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -8.56604, 2.125, 6.29155)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp3"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp3"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp3"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp3"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.42595, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 52.45
+
+[node name="StreetLamp4" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.736147, 2.125, 0.849128)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp4"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp4"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp4"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp4"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 42.52
+
+[node name="StreetLamp5" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0.208248, 2.125, 9.30272)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp5"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp5"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp5"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp5"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.43141, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 52.45
+
+[node name="StreetLamp12" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4.77463, 2.125, 9.30272)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp12"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp12"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp12"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp12"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.42243, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 52.45
+
+[node name="StreetLamp6" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 6.58003, 2.125, 9.30272)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp6"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp6"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp6"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp6"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.43115, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 51.21
+
+[node name="StreetLamp7" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9.3429, 2.125, 0.125801)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp7"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp7"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp7"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp7"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 13.911
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 49.97
+
+[node name="StreetLamp13" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9.3429, 2.125, 5.11031)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp13"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp13"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp13"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp13"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.43931, 1.4976, 2.86102e-06)
+light_energy = 13.028
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 53.69
+
+[node name="StreetLamp8" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 9.3429, 2.125, -7.38528)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp8"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp8"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp8"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp8"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 13.47
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 53.69
+
+[node name="StreetLamp9" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 5.47608, 2.125, -9.13162)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp9"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp9"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp9"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp9"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 14.021
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 53.69
+
+[node name="StreetLamp10" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, -4.92472, 2.125, -9.37884)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp10"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp10"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp10"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp10"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 52.45
+
+[node name="StreetLamp11" type="Node3D" parent="Terrain/StreetLamps"]
+transform = Transform3D(1.31134e-07, 0, -1, 0, 1, 0, 1, 0, 1.31134e-07, 0.0392866, 2.125, -9.26008)
+
+[node name="Post" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp11"]
+mesh = SubResource("CylinderMesh_5vkwv")
+skeleton = NodePath("../../..")
+
+[node name="Arm" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp11"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 0.788658, 1.4925, 0)
+mesh = SubResource("CylinderMesh_6ju0j")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Terrain/StreetLamps/StreetLamp11"]
+transform = Transform3D(-4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0, 1, 1.43342, 1.43743, 0)
+mesh = SubResource("SphereMesh_2nqik")
+
+[node name="SpotLight3D" type="SpotLight3D" parent="Terrain/StreetLamps/StreetLamp11"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 1.39971, 1.44413, 0)
+light_energy = 12.918
+light_indirect_energy = 5.303
+shadow_enabled = true
+distance_fade_enabled = true
+spot_angle = 49.97
+
+[node name="FogVolume" type="FogVolume" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.62204, 0)
+size = Vector3(27.31, 0.7, 23.27)
+material = SubResource("FogMaterial_1t3cj")
+
+[node name="Snow" type="GPUParticles3D" parent="Terrain"]
+process_mode = 3
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.62341, 0)
+amount = 5000
+lifetime = 15.23
+visibility_aabb = AABB(-10.1219, -6.32925, -10.1331, 20.2438, 8.85968, 20.2663)
+process_material = SubResource("ParticleProcessMaterial_b77iu")
+draw_pass_1 = SubResource("SphereMesh_ej5p8")
+
+[node name="GPUParticlesCollisionBox3D" type="GPUParticlesCollisionBox3D" parent="Terrain/Snow"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.21881, 0)
+size = Vector3(20, 0.37, 20)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Terrain"]
+environment = SubResource("Environment_454cb")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="Terrain"]
+transform = Transform3D(1, 0, 0, 0, 0.993659, 0.11244, 0, -0.11244, 0.993659, 0, 6.65899, 0)
